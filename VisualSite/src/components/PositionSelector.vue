@@ -1,54 +1,98 @@
 <script setup lang="ts">
-    import {ref} from 'vue'
-    const props = defineProps<{width: number, height: number}>()
+
+import {ref, type Ref} from 'vue'
     type Point = {
         x: number,
         y: number
     }
+    const props = defineProps<{width: number, height: number, 
+        aibotpos: Point, playerpos: Point}>()
+    const emit = defineEmits<{
+        (e: 'update:ai', value: Point): void,
+        (e: 'update:player', value:Point): void
+    }>()
+    const aiPixelPos = ref<Point>({x: 0, y: 0})
+    const playerPixelPos = ref<Point>({x: 0, y: 0})
+    
 
-    const AI_Bot_Pos = ref<Point>({x: props.width/2, y: props.height-(props.height/10)})
-    const Player_Pos = ref<Point>({x: props.width/2, y: (props.height/10)})
+    
     const selectedButton = ref<'AI_Bot' | 'Player'>('AI_Bot')
 
     const handleBoxClick = (event: MouseEvent) => {
+        event.preventDefault()
         const box = event.currentTarget as HTMLElement
         const rect = box.getBoundingClientRect()
         const left = event.clientX - rect.left
         const bottom = rect.height - (event.clientY - rect.top)
-        console.log({left, bottom})
+       
+    
+        const pixelWidth = 30 * window.innerWidth/100
+        const coordPoint: Point = {x: left/pixelWidth*props.width, y: bottom/pixelWidth*props.height}
+        console.log("COORD POINT IS " + JSON.stringify(coordPoint))
         if(selectedButton.value === 'AI_Bot'){
-            AI_Bot_Pos.value = {x: left, y: bottom}
+            emit('update:ai', coordPoint)
+            aiPixelPos.value = {x: left-10, y: bottom-10}
         } else {
-            Player_Pos.value = {x: left, y: bottom}
+            playerPixelPos.value = {x: left-10, y: bottom-10}
+            emit('update:player', coordPoint)
         }
     }
 </script>
 
 <template>
+    <p :style="{marginTop:'1rem'}">Position</p>
     <div class = "selectorButtons">
-        <label for="AI_Bot">AI Bot</label>
-        <input type="radio" id="AI_Bot" value="AI_Bot" v-model="selectedButton">
-        <label for="Player">Player</label>
-        <input type ="radio" id="Player" value="Player" v-model="selectedButton">
+        <div class = 'InputRow'>
+            <label for="AI_Bot">AI Bot</label>
+            <input type="radio" id="AI_Bot" value="AI_Bot" v-model="selectedButton">
+            <label for="Player">Player</label>
+            <input type ="radio" id="Player" value="Player" v-model="selectedButton">
+        </div>
+        <div :style ="{margin:'1.5rem'}" class = 'InputRow'>
+            <input type="text" v-if="selectedButton=='AI_Bot'" v-model="aibotpos.x"></input>
+            <input type="text" v-if="selectedButton=='AI_Bot'" v-model="aibotpos.y"></input>
+            <input type="text" v-if="selectedButton=='Player'" v-model="playerpos.x"></input>
+            <input type="text" v-if="selectedButton=='Player'" v-model="playerpos.y"></input>
+        </div>
     </div>
     <div class="box" @click="handleBoxClick">
-        <div class="dot" :style="{left: AI_Bot_Pos.x + 'px', bottom: AI_Bot_Pos.y + 'px'}"></div>
-        <div class="dot" :style="{left: Player_Pos.x + 'px', bottom: Player_Pos.y + 'px'}"></div>
+        <div class="dot ai" :style="{left: aiPixelPos.x+ 'px', bottom: aiPixelPos.y + 'px'}"></div>
+        <div class="dot player" :style="{left: playerPixelPos.x + 'px', bottom: playerPixelPos.y + 'px'}"></div>
+        <p :style ="{ position: 'absolute', left: '30.5vw', bottom: '0px', transform: 'translateY(100%)'}">{{ props.width }}</p>
+        <p :style ="{ position: 'absolute', bottom: '30vw', left: '0px', transform: 'translateX(-100%)'}">{{ props.height }}</p>
     </div>
 </template>
 <style scoped>
     .box{
         border: 5px solid black;
-        width:500px;
-        height: 500px;
+        width:  30vw;
+        height: 30vw;
         position: relative;
+        margin: 0;
     }
     .dot{
         position: absolute;
         width:10px;
         height:10px;
-        border: 10px solid blue;
+        
+    }
+    .player{
         background-color: blue;
+    }
+    .ai{
+        background-color: red;
+    }
+    p{
+        margin:0%
+    }
+    .selectorButtons{
+        display: flex;
+        flex-direction: column;
+    }
+    .InputRow{
+        width: 100vw;
+        display: flex;
+        justify-content: center;
     }
 </style>
 
