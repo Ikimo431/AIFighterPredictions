@@ -45,9 +45,10 @@
         }
 
 
-        const outputData = outputTensor.data
+        const outputData = outputTensor.data as Float32Array
 
         console.log('Output Probabilities:', outputData);
+        return outputData
       
 
         

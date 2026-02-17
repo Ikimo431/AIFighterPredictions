@@ -37,17 +37,7 @@ import runModel from '../Utils/onnxConnector';
             playerPixelPos.value = {x: left-10, y: bottom-10}
             emit('update:player', coordPoint)
         }
-        runModel({
-            distance: 0.5,
-            angle: 0.5,
-            arenaWidth: 8,
-            arenaHeight: 8,
-            playerHealth: 100,
-            AIHealth: 100,
-            AI_timesinceHit: 10,
-            AI_Actioncooldown: 0,
-            Player_ActionCooldown: 0
-        })
+       
     }
 
     function onResize(){
