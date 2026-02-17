@@ -1,0 +1,22 @@
+{
+    "UnitRatios":
+    {
+        "UnitsToMeters": 1,
+        "TickToSeconds": 0.5
+    },
+    "ArenaSettings":
+    {
+        "Length": 8,
+        "Width": 8
+    },
+    "FighterSettings":{
+        "BlockActionCooldown": 3,
+        "BlockLength": 0.5,
+        "AttackActionCooldown": 2.5,
+        "AttackRange": 1,
+        "Health": 100,
+        "MoveDistance" : 1
+    }
+    
+    
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {ref, type Ref} from 'vue'
+import {onBeforeUnmount, onMounted, ref, type Ref} from 'vue'
     type Point = {
         x: number,
         y: number
@@ -37,6 +37,26 @@ import {ref, type Ref} from 'vue'
             emit('update:player', coordPoint)
         }
     }
+
+    function onResize(){
+        const pixelWidth = 30*window.innerWidth/100
+        aiPixelPos.value = {x: (props.aibotpos.x/props.width)*pixelWidth, y: (props.aibotpos.y/props.width)*pixelWidth}
+        playerPixelPos.value = {x: (props.playerpos.x/props.width)*pixelWidth, y: (props.playerpos.y/props.width)*pixelWidth}
+    }
+
+    onMounted(()=>{
+        
+
+        window.addEventListener('resize', onResize)
+        onResize()
+
+    })
+
+    onBeforeUnmount(()=>{
+        window.removeEventListener('resize', onResize)
+    })
+        
+  
 </script>
 
 <template>
