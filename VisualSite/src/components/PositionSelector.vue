@@ -62,6 +62,11 @@ import runModel from '../Utils/onnxConnector';
 </script>
 
 <template>
+ 
+
+    <section class="posSelectorContainer">
+
+   
     <p :style="{marginTop:'1rem'}">Position</p>
     <div class = "selectorButtons">
         <div class = 'InputRow'>
@@ -83,6 +88,8 @@ import runModel from '../Utils/onnxConnector';
         <p :style ="{ position: 'absolute', left: '30.5vw', bottom: '0px', transform: 'translateY(100%)'}">{{ props.width }}</p>
         <p :style ="{ position: 'absolute', bottom: '30vw', left: '0px', transform: 'translateX(-100%)'}">{{ props.height }}</p>
     </div>
+    </section>
+   
 </template>
 <style scoped>
     .box{
@@ -115,6 +122,12 @@ import runModel from '../Utils/onnxConnector';
         width: 100vw;
         display: flex;
         justify-content: center;
+    }
+    .posSelectorContainer{
+        width: 30vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 </style>
 

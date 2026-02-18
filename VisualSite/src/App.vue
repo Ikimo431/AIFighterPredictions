@@ -1,12 +1,17 @@
 <script setup lang="ts">
   import { ref, watch } from 'vue';
   import runModel from './Utils/onnxConnector';
-
+  import jsonData from '../config.json' with { type: 'json' };
+  const maxHealth = ref<number>(jsonData.FighterSettings.Health)
+  const blockCooldown = ref<number>(jsonData.FighterSettings.BlockActionCooldown)
+  const attackCooldown = ref<number>(jsonData.FighterSettings.AttackActionCooldown)
 
   type Point = {
         x: number,
         y: number
     }
+
+  const selectedModel = ref<string>('CuatiousAggro_reward_AggressionComplete')
 
   //input values
   const AI_Bot_Pos = ref<Point>({x: 4, y: 6})
@@ -37,13 +42,11 @@
    
   })
   watch([AI_Bot_Pos, Player_Pos, distance, angle, playerhealth, 
-        aibotcooldown, playercooldown, aibotcooldown, ai_timeSinceHit], 
+        aibothealth, playercooldown, aibotcooldown, ai_timeSinceHit, selectedModel], 
       async ()=>{
-         const outputProbs = await runModel({
+         const outputProbs = await runModel(selectedModel.value, {
           distance: distance.value,
           angle: angle.value,
-          arenaWidth: 8,
-          arenaHeight: 8,
           playerHealth: playerhealth.value,
           AIHealth: aibothealth.value,
           AI_timesinceHit: ai_timeSinceHit.value,
@@ -72,30 +75,44 @@ import PercentBargraph from './components/PercentBargraph.vue';
 <template id = "main">
   <div id="main">
     <form>
+      <select v-model="selectedModel">
+        <option value="CautiousAggro_Reward_AggressionComplete">CautiousAggro_Reward_AggressionComplete</option>
+        <option value="Coward_Reward_ChaseComplete">Coward_Reward_ChaseComplete</option>
+        <option value="Smart_BasicComplete">Smart_BasicComplete</option>
+      </select>
       <div className="InputRow">
         <label for="PlayerHealth">Player Health</label>
-        <input type="number" name="PlayerHealth" v-model="playerhealth">
+        <input type="number" :max="maxHealth" min="0" name="PlayerHealth" v-model="playerhealth">
         <label for="PlayerCooldown">Player Cooldown</label>
-        <input type="number" name="PlayerCooldown" v-model="playercooldown">
+        <input type="number" name="PlayerCooldown" :max="Math.max(blockCooldown, attackCooldown)" min="0" v-model="playercooldown">
       </div>
       <div className="InputRow">
         <label for="AIHealth">AI Health</label>
-        <input type="number" name="AIHealth" v-model="aibothealth">
+        <input type="number" name="AIHealth" :max="maxHealth" min="0" v-model="aibothealth">
         <label for="AICooldown">AI Cooldown</label>
-        <input type="number" name="AICooldown" v-model="aibotcooldown">
+        <input type="number" name="AICooldown" :max="Math.max(blockCooldown, attackCooldown)" min="0" v-model="aibotcooldown">
       </div>
       <label for="AItsh" :style="{marginTop: '1rem'}">Time since AI last landed a hit (in seconds)</label>
-      <input type="number" name="AItsh" v-model="ai_timeSinceHit">
-      
-      <PositionSelector :aibotpos=AI_Bot_Pos :playerpos = Player_Pos :width=8 :height=8
-      @update:ai="AI_Bot_Pos=$event" @update:player="Player_Pos=$event"
-      ></PositionSelector>
-      <PercentBargraph :properties="[advanceProb, retreatProb, slProb, srProb, attackProb, blockProb]"></PercentBargraph>
+      <input type="number" min="0"name="AItsh" v-model="ai_timeSinceHit">
+      <div class="row">
+        <PositionSelector :aibotpos=AI_Bot_Pos :playerpos = Player_Pos :width=8 :height=8
+        @update:ai="AI_Bot_Pos=$event" @update:player="Player_Pos=$event"
+        ></PositionSelector>
+        <PercentBargraph :properties="[advanceProb, retreatProb, slProb, srProb, attackProb, blockProb]"></PercentBargraph>
+      </div>
+     
     </form>
   </div>
   
 </template>
 
 <style scoped>
-  
+  .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10vw;
+    width: 100vw;
+
+  }
 </style>

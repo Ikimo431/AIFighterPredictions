@@ -12,12 +12,16 @@
     function calcHeight(num: number) {
         return pixelHeight*num;
     }
+    
 </script>
 
 
 <template>
     <div class="graphContainer">
-        <div v-for="bar in properties" class="bar" :style="{height: calcHeight(bar.num.value)+'px'}"></div>
+        <div v-for="bar in properties" class="bar" :style="{height: calcHeight(bar.num.value)+'px'}">
+            <p :style="{position: 'absolute', bottom: '-3rem'}">{{ bar.name }}</p>
+            <p :style="{position: 'absolute', top: '-3rem' }">{{ parseFloat(bar.num.value.toFixed(2))*100 }}%</p>
+        </div>
         <p :style="{ position: 'absolute', left: '0px', bottom: '48vh', transform: 'translateX(-100%)'}">1</p>
         <p :style="{ position: 'absolute', left: '0px', bottom: '-3rem', transform: 'translateX(-100%)'}">0</p>
     </div>
@@ -39,7 +43,8 @@
     }
     .bar{
         background-color: red;
-        width: 2rem;
+        width: 10rem;
+        position: relative;
 
     }
 
