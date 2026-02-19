@@ -75,7 +75,9 @@ import PercentBargraph from './components/PercentBargraph.vue';
 <template id = "main">
   <div id="main">
     <form>
-      <select v-model="selectedModel">
+      <div class="stateInputs">
+      <label for="Selected model" :style="{marginBottom: '0.5rem'}">AI Model</label>
+      <select v-model="selectedModel" name="SelectedModel">
         <option value="CautiousAggro_Reward_AggressionComplete">CautiousAggro_Reward_AggressionComplete</option>
         <option value="Coward_Reward_ChaseComplete">Coward_Reward_ChaseComplete</option>
         <option value="Smart_BasicComplete">Smart_BasicComplete</option>
@@ -93,8 +95,9 @@ import PercentBargraph from './components/PercentBargraph.vue';
         <input type="number" name="AICooldown" :max="Math.max(blockCooldown, attackCooldown)" min="0" v-model="aibotcooldown">
       </div>
       <label for="AItsh" :style="{marginTop: '1rem'}">Time since AI last landed a hit (in seconds)</label>
-      <input type="number" min="0"name="AItsh" v-model="ai_timeSinceHit">
-      <div class="row">
+      <input type="number" min="0"name="AItsh" v-model="ai_timeSinceHit" :style="{marginBottom: '5rem'}">
+      </div>
+      <div class="PosAndGraph">
         <PositionSelector :aibotpos=AI_Bot_Pos :playerpos = Player_Pos :width=8 :height=8
         @update:ai="AI_Bot_Pos=$event" @update:player="Player_Pos=$event"
         ></PositionSelector>
@@ -107,12 +110,39 @@ import PercentBargraph from './components/PercentBargraph.vue';
 </template>
 
 <style scoped>
-  .row{
+  .PosAndGraph{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10vw;
+    gap: 5vw;
     width: 100vw;
 
+  }
+  .InputRow{
+    margin-top: .5rem;
+  }
+  .stateInputs{
+      background-color: var(--card-bg-light);
+      padding: 2rem 8vw 0px 8vw;
+      border-radius: 1rem;
+      box-shadow: 5px 5px .5rem var(--card-bg-light);
+      margin-bottom: 2rem;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+  }
+  @media screen and (max-width: 850px){
+    .PosAndGraph{
+      flex-direction: column;
+      gap: 10vh;
+    }
+  }
+  @media (prefers-color-scheme: dark){
+    .stateInputs{
+      background-color: var(--card-bg-dark);
+       box-shadow: 5px 5px .5rem var(--card-bg-dark);
+    }
   }
 </style>

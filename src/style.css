@@ -11,6 +11,19 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+
+  --main-bg-light: #c9d9ff;
+  --main-bg-dark: #4b5775;
+  --card-bg-light: #4486f9;
+  --card-bg-dark: #324d7d;
+  --line-color-light: black;
+  --line-color-dark: rgb(9, 30, 112);
+  --text-color-light: black;
+  --text-color-dark: white;
+  --bar-color-light: #05b3b3;
+  --bar-color-dark: #014545;
+
 }
 
 
@@ -20,6 +33,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--main-bg-light);
 }
 
 label{
@@ -32,12 +46,19 @@ label{
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5vh;
 }
 form{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+ @media (prefers-color-scheme: dark) {
+    body{
+      background-color: var(--main-bg-dark);
+    }
+  }
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -50,4 +71,10 @@ form{
   button {
     background-color: #f9f9f9;
   }
+
+  input, select{
+    padding: .25rem;
+    border-radius: .5rem;
+  }
+ 
 }

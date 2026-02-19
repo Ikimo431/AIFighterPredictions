@@ -13,7 +13,9 @@ import {onBeforeUnmount, onMounted, ref} from 'vue'
     }>()
     const aiPixelPos = ref<Point>({x: 0, y: 0})
     const playerPixelPos = ref<Point>({x: 0, y: 0})
-    
+    const boxHeightPx = ref<number>(30*window.innerWidth/100)
+    const boxWidthPx = ref<number>(30*window.innerWidth/100)
+    const labelOffset = ref<string>('30.5vw')
 
     
     const selectedButton = ref<'AI_Bot' | 'Player'>('AI_Bot')
@@ -26,7 +28,14 @@ import {onBeforeUnmount, onMounted, ref} from 'vue'
         const bottom = rect.height - (event.clientY - rect.top)
        
     
-        const pixelWidth = 30 * window.innerWidth/100
+   
+        let pixelWidth = 0
+        if (window.innerWidth<=850) {
+            pixelWidth = 50*window.innerWidth/100
+        }
+        else {
+            pixelWidth = 30*window.innerWidth/100
+        }
         const coordPoint: Point = {x: left/pixelWidth*props.width, y: bottom/pixelWidth*props.height}
         console.log("COORD POINT IS " + JSON.stringify(coordPoint))
         if(selectedButton.value === 'AI_Bot'){
@@ -40,9 +49,20 @@ import {onBeforeUnmount, onMounted, ref} from 'vue'
     }
 
     function onResize(){
-        const pixelWidth = 30*window.innerWidth/100
-        aiPixelPos.value = {x: (props.aibotpos.x/props.width)*pixelWidth, y: (props.aibotpos.y/props.width)*pixelWidth}
-        playerPixelPos.value = {x: (props.playerpos.x/props.width)*pixelWidth, y: (props.playerpos.y/props.width)*pixelWidth}
+        let pixelHeight = 0
+        let pixelWidth = 0
+        if (window.innerWidth<=850) {
+            pixelHeight= 50*window.innerWidth/100
+            pixelWidth = 50*window.innerWidth/100
+        }
+        else {
+            pixelHeight = 30*window.innerWidth/100
+            pixelWidth = 30*window.innerWidth/100
+        }
+        aiPixelPos.value = {x: (props.aibotpos.x/props.width)*pixelWidth, y: (props.aibotpos.y/props.height)*pixelHeight}
+        playerPixelPos.value = {x: (props.playerpos.x/props.width)*pixelWidth, y: (props.playerpos.y/props.height)*pixelHeight}
+        //NOTE no dynamic height is implemented in this component, all dimensions for display is a fixed vw
+       
     }
 
     onMounted(()=>{
@@ -65,8 +85,7 @@ import {onBeforeUnmount, onMounted, ref} from 'vue'
 
     <section class="posSelectorContainer">
 
-   
-    <p :style="{marginTop:'1rem'}">Position</p>
+    <h3 :style="{marginTop:'1rem'}">Position</h3>
     <div class = "selectorButtons">
         <div class = 'InputRow'>
             <label for="AI_Bot">AI Bot</label>
@@ -84,19 +103,39 @@ import {onBeforeUnmount, onMounted, ref} from 'vue'
     <div class="box" @click="handleBoxClick">
         <div class="dot ai" :style="{left: aiPixelPos.x+ 'px', bottom: aiPixelPos.y + 'px'}"></div>
         <div class="dot player" :style="{left: playerPixelPos.x + 'px', bottom: playerPixelPos.y + 'px'}"></div>
-        <p :style ="{ position: 'absolute', left: '30.5vw', bottom: '0px', transform: 'translateY(100%)'}">{{ props.width }}</p>
-        <p :style ="{ position: 'absolute', bottom: '30vw', left: '0px', transform: 'translateX(-100%)'}">{{ props.height }}</p>
+        <p class='label bottom'>{{ props.width }}</p>
+        <p class='label top'>{{ props.height }}</p>
     </div>
     </section>
    
 </template>
 <style scoped>
+    .posSelectorContainer{
+        background-color: var(--card-bg-light);
+        padding: 0px 2vw 2rem 2vw;
+        border-radius: 1rem;
+        box-shadow: 5px 5px .5rem var(--card-bg-light);
+    }
     .box{
         border: 5px solid black;
         width:  30vw;
         height: 30vw;
         position: relative;
         margin: 0;
+        --label-offset :30.5vw;
+    }
+    .label{
+        position: absolute;
+    }
+    .label.bottom{
+        bottom: 0px;
+        transform: translateY(100%);
+        left: var(--label-offset)
+    }
+    .label.top{
+        left: 0px;
+        transform: translateX(-100%);
+        bottom: var(--label-offset)
     }
     .dot{
         position: absolute;
@@ -127,6 +166,31 @@ import {onBeforeUnmount, onMounted, ref} from 'vue'
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+ 
+
+    @media screen and (max-width: 850px) {
+        .box{
+            width: 50vw;
+            height: 50vw;
+            --label-offset: 50vw;
+        }
+        .label.top{
+            transform: translateX(-200%);
+        }
+        .posSelectorContainer{
+             padding: 0px 20vw 2rem 20vw;
+        }
+    }
+    @media (prefers-color-scheme: dark){
+        .posSelectorContainer{
+            background-color: var(--card-bg-dark);
+            box-shadow: 5px 5px .5rem var(--card-bg-dark);
+
+        }
+        .box{
+            border: 5px solid var(--line-color-dark);
+        }
     }
 </style>
 
