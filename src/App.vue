@@ -86,6 +86,7 @@
         <option value="Coward_Reward_ChaseComplete">Coward_Reward_ChaseComplete</option>
         <option value="Coward_BasicComplete">Coward_BasicComplete</option>
         <option value="Coward_Reward_AggressionComplete">Coward_Reward_AggressionComplete</option>
+        <option value="Coward_Reward_ChaseCompletev2">Coward_Reward_ChaseCompletev2</option>
        
 
         
