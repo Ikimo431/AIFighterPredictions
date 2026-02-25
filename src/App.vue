@@ -12,6 +12,7 @@
     }
 
   const selectedModel = ref<string>('CautiousAggro_Reward_AggressionComplete')
+  const selectedModelType = ref<string | undefined>(undefined)
 
   //input values
   const AI_Bot_Pos = ref<Point>({x: 4, y: 6})
@@ -76,22 +77,51 @@
   <div id="main">
     <form>
       <div class="stateInputs">
+
+      <label for="ModelType" :style="{marginBottom: '0.5rem'}">Model Category</label>
+      <select v-model="selectedModelType" name="ModelType">
+        <option value="Berserker">Berserker</option>
+        <option value="CautiousAggro">CautiousAggro</option>
+        <option value="Coward">Coward</option>
+      </select>
+
       <label for="Selected model" :style="{marginBottom: '0.5rem'}">AI Model</label>
-      <select v-model="selectedModel" name="SelectedModel">
+      <p v-if="!selectedModelType">Please Select a Model Type</p>
+      <select v-model="selectedModel" v-if="selectedModelType=='Berserker'" name="SelectedModel">
          <option value="Beserker_Reward_AggressionComplete">Beserker_Reward_AggressionComplete</option>
-         <option value="CautiousAggro_BasicComplete">CautiousAggro_BasicComplete</option>
+         
 
-        <option value="CautiousAggro_Reward_AggressionComplete">CautiousAggro_Reward_AggressionComplete</option>
-
-        <option value="Coward_Reward_ChaseComplete">Coward_Reward_ChaseComplete</option>
-        <option value="Coward_BasicComplete">Coward_BasicComplete</option>
-        <option value="Coward_Reward_AggressionComplete">Coward_Reward_AggressionComplete</option>
-        <option value="Coward_Reward_ChaseCompletev2">Coward_Reward_ChaseCompletev2</option>
+        
        
 
         
         
       </select>
+
+      <select v-model="selectedModel" v-if="selectedModelType=='CautiousAggro'" name="SelectedModel">
+          <option value="CautiousAggro_BasicComplete">CautiousAggro_BasicComplete</option>
+          <option value="CautiousAggro_Reward_AggressionComplete">CautiousAggro_Reward_AggressionComplete</option>
+
+          <option value="CautiousAggro_BasicCompletev2">CautiousAggro_BasicCompletev2</option>
+          <option value="CautiousAggro_Reward_AggressionCompletev2">CautiousAggro_Reward_AggressionCompletev2</option>
+          <option value="CautiousAggro_RewardChaseCompletev2">CautiousAggro_RewardChaseCompletev2</option>
+
+          <option value="CautiousAggro_BasicEntropyCompletev3">CautiousAggro_BasicEntropyCompletev3</option>
+          <option value="CautiousAggro_RewardAgressionEntropyCompletev3">CautiousAggro_RewardAgressionEntropyCompletev3</option>
+          <option value="CautiousAggro_RewardChaseEntropyCompletev3">CautiousAggro_RewardChaseEntropyCompletev3</option>
+      </select>
+      <select v-model="selectedModel" v-if="selectedModelType=='Coward'" name="SelectedModel">
+        <option value="Coward_BasicComplete">Coward_BasicComplete</option>
+        <option value="Coward_Reward_ChaseComplete">Coward_Reward_ChaseComplete</option>
+        <option value="Coward_Reward_AggressionComplete">Coward_Reward_AggressionComplete</option>
+
+        <option value="Coward_Reward_ChaseCompletev2">Coward_Reward_ChaseCompletev2</option>
+
+        <option value="Coward_Reward_ChaseCompletev3">Coward_Reward_ChaseCompletev3</option>
+        <option value="Coward_Reward_AggressionCompletev3">Coward_Reward_AggressionCompletev3</option>
+
+      </select>
+      
       <div className="InputRow">
         <label for="PlayerHealth">Player Health</label>
         <input type="number" :max="maxHealth" min="0" name="PlayerHealth" v-model="playerhealth">
