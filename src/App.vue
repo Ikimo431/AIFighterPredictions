@@ -109,6 +109,10 @@
           <option value="CautiousAggro_BasicEntropyCompletev3">CautiousAggro_BasicEntropyCompletev3</option>
           <option value="CautiousAggro_RewardAgressionEntropyCompletev3">CautiousAggro_RewardAgressionEntropyCompletev3</option>
           <option value="CautiousAggro_RewardChaseEntropyCompletev3">CautiousAggro_RewardChaseEntropyCompletev3</option>
+
+          <option value="CautiousAggro_BasicEntropy64Complete">CautiousAggro_BasicEntropy64Complete</option>
+          <option value="CautiousAggro_RewardAgressionEntropy64Complete">CautiousAggro_RewardAgressionEntropy64Complete</option>
+          <option value="CautiousAggro_RewardChaseEntropy64Complete">CautiousAggro_RewardChaseEntropy64Complete</option>
       </select>
       <select v-model="selectedModel" v-if="selectedModelType=='Coward'" name="SelectedModel">
         <option value="Coward_BasicComplete">Coward_BasicComplete</option>
