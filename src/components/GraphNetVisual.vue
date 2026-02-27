@@ -1,6 +1,7 @@
-<script setup lange="ts">
-    import { Tensor } from 'onnxruntime-web'
+<script setup lang="ts">
 import * as protobuf from 'protobufjs'
+import { onMounted } from 'vue'
+onMounted(async()=> {
     const response = await fetch('CautiousAggro_RewardChaseEntropy64Complete.onnx')
     const buffer = await response.arrayBuffer()
     //console.log("PARSING ONNX OUTPUT")
@@ -9,7 +10,7 @@ import * as protobuf from 'protobufjs'
     const root = await protobuf.load('onnx.proto')
     const ModelProto = root.lookupType('onnx.ModelProto')
 
-    const model = ModelProto.decode(new Uint8Array(buffer))
+    const model = ModelProto.decode(new Uint8Array(buffer)) as any
    
 
     console.log("Initializer count")
@@ -34,7 +35,9 @@ import * as protobuf from 'protobufjs'
         catch(e){
             console.log("ERROR making float array: " + e)
         }
-        
+        if (!floatWeights){
+            break;
+        }
         const inFeatures = tensor.dims[1]
         const outFeatures = tensor.dims[0]
 
@@ -49,6 +52,8 @@ import * as protobuf from 'protobufjs'
        
        
     }
+})
+    
 
     
 </script>
