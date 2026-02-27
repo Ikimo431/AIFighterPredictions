@@ -71,6 +71,7 @@
 
   import PositionSelector from './components/PositionSelector.vue';
   import PercentBargraph from './components/PercentBargraph.vue';
+  import NNVisual from './components/NNVisual.vue';
 </script>
 
 <template id = "main">
@@ -146,6 +147,7 @@
         @update:ai="AI_Bot_Pos=$event" @update:player="Player_Pos=$event"
         ></PositionSelector>
         <PercentBargraph :properties="[advanceProb, retreatProb, slProb, srProb, attackProb, blockProb]"></PercentBargraph>
+        <NNVisual></NNVisual>
       </div>
      
     </form>
