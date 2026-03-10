@@ -87,19 +87,16 @@
         <option value="Berserker">Berserker</option>
         <option value="CautiousAggro">CautiousAggro</option>
         <option value="Coward">Coward</option>
+        <option value="Balance">Balance</option>
       </select>
 
       <label for="Selected model" :style="{marginBottom: '0.5rem'}">AI Model</label>
       <p v-if="!selectedModelType">Please Select a Model Type</p>
       <select v-model="selectedModel" v-if="selectedModelType=='Berserker'" name="SelectedModel">
          <option value="Beserker_Reward_AggressionComplete">Beserker_Reward_AggressionComplete</option>
-         
-
-        
-       
-
-        
-        
+      </select>
+      <select v-model="selectedModel" v-if="selectedModelType=='Balance'">
+        <option value="Balance_Reward_AggressionBaseCandidateComplete30">Balance_Reward_AggressionBaseCandidateComplete30</option>
       </select>
 
       <select v-model="selectedModel" v-if="selectedModelType=='CautiousAggro'" name="SelectedModel">
@@ -127,6 +124,10 @@
           <option value="CautiousAggro_RewardAgressionBaseCandidate2Complete">CautiousAggro_RewardAgressionBaseCandidate2Complete</option>
           <option value="CautiousAggro_RewardChaseBaseCandidate2Complete">CautiousAggro_RewardChaseBaseCandidate2Complete</option>
 
+          <option value="CautiousAggro_BaseCandidate30">CautiousAggro_BaseCandidate30</option>
+          <option value="CautiousAggro_RewardAgressionBaseCandidateComplete30">CautiousAggro_RewardAgressionBaseCandidateComplete30</option>
+          <option value="CautiousAggro_RewardChaseBaseCandidate2Complete30">CautiousAggro_RewardChaseBaseCandidate2Complete30</option>
+
       </select>
       <select v-model="selectedModel" v-if="selectedModelType=='Coward'" name="SelectedModel">
         <option value="Coward_BasicComplete">Coward_BasicComplete</option>
@@ -143,6 +144,8 @@
         <option value="Coward_Reward_ChaseBaseCandidateComplete">Coward_Reward_ChaseBaseCandidateComplete</option>
         <option value="Coward_Reward_AggressionBaseCandidate2Complete">Coward_Reward_AggressionBaseCandidate2Complete</option>
         <option value="Coward_Reward_ChaseBaseCandidate2Complete">Coward_Reward_ChaseBaseCandidate2Complete</option>
+
+        <option value="Coward_Reward_AggressionBaseCandidateComplete30">Coward_Reward_AggressionBaseCandidateComplete30</option>
         
         
 
