@@ -20,7 +20,7 @@
         
 
         const XLimit = jsonData.ArenaSettings.Length*meterConversion
-        const YLimit = jsonData.ArenaSettings.Width*meterConversion
+        const YLimit = jsonData.ArenaSettings.Height*meterConversion
         const session = await ort.InferenceSession.create(`${model}.onnx`, {
           executionProviders: ['wasm']
         })
