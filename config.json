@@ -2,7 +2,7 @@
     "UnitRatios":
     {
         "UnitsToMeters": 1,
-        "TickToSeconds": 0.5
+        "TickToSeconds": 0.375
     },
     "ArenaSettings":
     {
