@@ -17,6 +17,7 @@
   const selectedModel = ref<string>('CautiousAggro_Reward_AggressionComplete')
   const selectedModelType = ref<string | undefined>(undefined)
   const InputTensorScaler = ref<number>(1);
+  const selectedModelVersion = ref<string | undefined>(undefined)
   //input values
   const AI_Bot_Pos = ref<Point>({x: 4, y: 6})
   const Player_Pos = ref<Point>({x: 4, y: 2})
@@ -56,6 +57,7 @@
           AI_timesinceHit: ai_timeSinceHit.value,
           AI_Actioncooldown: aibotcooldown.value,
           Player_ActionCooldown: playercooldown.value,
+          IncludeInRange: selectedModelVersion.value=="V1"? false : true
         }, InputTensorScaler.value)
         if (!outputProbs){
           throw new Error('Failed to get output probabilities')
@@ -82,8 +84,17 @@
     <form>
       <div class="stateInputs">
 
+      <label for = "ModelVersion">
+      <select v-model="selectedModelVersion" name="ModelVersion">
+        <option value = "V1">V1</option>
+        <option value = "V2">V2</option>
+      </select>
+      </label>
+
+      
       <label for="ModelType" :style="{marginBottom: '0.5rem'}">Model Category</label>
-      <select v-model="selectedModelType" name="ModelType">
+      <p v-if="!selectedModelVersion">Please Select a Model Version</p>
+      <select v-if="selectedModelVersion" v-model="selectedModelType" name="ModelType">
         <option value="Berserker">Berserker</option>
         <option value="CautiousAggro">CautiousAggro</option>
         <option value="Coward">Coward</option>
@@ -92,14 +103,14 @@
 
       <label for="Selected model" :style="{marginBottom: '0.5rem'}">AI Model</label>
       <p v-if="!selectedModelType">Please Select a Model Type</p>
-      <select v-model="selectedModel" v-if="selectedModelType=='Berserker'" name="SelectedModel">
+      <select v-model="selectedModel" v-if="selectedModelType=='Berserker' && selectedModelVersion=='V1'" name="SelectedModel">
          <option value="Beserker_Reward_AggressionComplete">Beserker_Reward_AggressionComplete</option>
       </select>
-      <select v-model="selectedModel" v-if="selectedModelType=='Balance'">
+      <select v-model="selectedModel" v-if="selectedModelType=='Balance' && selectedModelVersion=='V1'">
         <option value="Balance_Reward_AggressionBaseCandidateComplete30">Balance_Reward_AggressionBaseCandidateComplete30</option>
       </select>
 
-      <select v-model="selectedModel" v-if="selectedModelType=='CautiousAggro'" name="SelectedModel">
+      <select v-model="selectedModel" v-if="selectedModelType=='CautiousAggro' && selectedModelVersion=='V1'" name="SelectedModel">
           <option value="CautiousAggro_BasicComplete">CautiousAggro_BasicComplete</option>
           <option value="CautiousAggro_Reward_AggressionComplete">CautiousAggro_Reward_AggressionComplete</option>
 
@@ -127,9 +138,12 @@
           <option value="CautiousAggro_BaseCandidate30">CautiousAggro_BaseCandidate30</option>
           <option value="CautiousAggro_RewardAgressionBaseCandidateComplete30">CautiousAggro_RewardAgressionBaseCandidateComplete30</option>
           <option value="CautiousAggro_RewardChaseBaseCandidate2Complete30">CautiousAggro_RewardChaseBaseCandidate2Complete30</option>
+          
+
+          
 
       </select>
-      <select v-model="selectedModel" v-if="selectedModelType=='Coward'" name="SelectedModel">
+      <select v-model="selectedModel" v-if="selectedModelType=='Coward' && selectedModelVersion=='V1'" name="SelectedModel">
         <option value="Coward_BasicComplete">Coward_BasicComplete</option>
         <option value="Coward_Reward_ChaseComplete">Coward_Reward_ChaseComplete</option>
         <option value="Coward_Reward_AggressionComplete">Coward_Reward_AggressionComplete</option>
@@ -146,12 +160,16 @@
         <option value="Coward_Reward_ChaseBaseCandidate2Complete">Coward_Reward_ChaseBaseCandidate2Complete</option>
 
         <option value="Coward_Reward_AggressionBaseCandidateComplete30">Coward_Reward_AggressionBaseCandidateComplete30</option>
-        
-        
-
-
 
       </select>
+      <select v-model="selectedModel" v-if="selectedModelType=='CautiousAggro' && selectedModelVersion=='V2'" name="SelectedModel">
+        <option value="InRangeFeatureTestComplete">InRangeFeatureTestComplete</option>
+      </select>
+
+
+
+
+
       <label for="InputTensorScaler">Input Vector Multiplier</label>
       <input name="InputTensorScaler" type="number" min=1 v-model="InputTensorScaler">
       

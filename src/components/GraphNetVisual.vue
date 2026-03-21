@@ -183,8 +183,8 @@ async function renderVisual(){
         const n1 = getNeuronElement(connection.from)
         const n2 = getNeuronElement(connection.to)
         if (!n1 || !n2) continue
-        console.log(JSON.stringify(connection))
-        console.log(n1)
+        //console.log(JSON.stringify(connection))
+        //console.log(n1)
         drawLine(n1, n2, connection.weight)
     }
 }
