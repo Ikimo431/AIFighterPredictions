@@ -164,6 +164,11 @@
       </select>
       <select v-model="selectedModel" v-if="selectedModelType=='CautiousAggro' && selectedModelVersion=='V2'" name="SelectedModel">
         <option value="InRangeFeatureTestComplete">InRangeFeatureTestComplete</option>
+        <option value="FC_8CautiousAggroComplete">FC_8CautiousAggroComplete</option>
+        <option value="FC_8CautiousAggroAdamWComplete">FC_8CautiousAggroAdamWComplete</option>
+      </select>
+      <select v-model="selectedModel" v-if="selectedModelType=='Coward' && selectedModelVersion=='V2'" name="SelectedModel">
+        <option value="FC_8CowardAdamWComplete">FC_8CowardAdamWComplete</option>
       </select>
 
 
