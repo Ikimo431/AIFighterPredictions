@@ -175,12 +175,19 @@
         <option value="FC_8RevisedCautiousAggro_Adam4LayerComplete">FC_8RevisedCautiousAggro_Adam4LayerComplete</option>
         <option value="FC_8RevisedCautiousAggro_AdamW4LayerComplete">FC_8RevisedCautiousAggro_AdamW4LayerComplete</option>
 
+        <option value="FC_8ExportChanges_CA1_8HSComplete">FC_8ExportChanges_CA1_8HSComplete</option>
+        <option value="FC_8ExportChanges_CA2_8HSComplete">FC_8ExportChanges_CA2_8HSComplete</option>
+        <option value="FC_8ExportChanges_CA3_8HSComplete">FC_8ExportChanges_CA3_8HSComplete</option>
+        <option value="FC_8ExportChanges_CA4_8HSComplete">FC_8ExportChanges_CA4_8HSComplete</option>
+
         
       </select>
       <select v-model="selectedModel" v-if="selectedModelType=='Coward' && selectedModelVersion=='V2'" name="SelectedModel">
         <option value="FC_8CowardAdamWComplete">FC_8CowardAdamWComplete</option>
         <option value="FC_8RevisedCowardAdamComplete">FC_8RevisedCowardAdamComplete</option>
         <option value="FC_8RevisedCowardAdamWomplete">FC_8RevisedCowardAdamWomplete</option>
+
+        <option value="FC_8ExportChanges_Coward_8HSComplete">FC_8ExportChanges_Coward_8HSComplete</option>
       </select>
 
 
